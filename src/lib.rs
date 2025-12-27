@@ -1,7 +1,8 @@
 use nih_plug::{prelude::*, util::db_to_gain};
 use std::sync::Arc;
+use std::num::NonZeroU32;
 
-struct MyPlugin {
+struct RMasterEQ {
     params: Arc<PluginParams>,
 }
 
@@ -11,7 +12,7 @@ struct PluginParams {
     pub gain: FloatParam,
 }
 
-impl Default for MyPlugin {
+impl Default for RMasterEQ {
     fn default() -> Self {
         Self {
             params: Arc::new(PluginParams::default()),
@@ -37,11 +38,11 @@ impl Default for PluginParams {
     }
 }
 
-impl Plugin for MyPlugin {
-    const NAME: &'static str = "My Plugin";
-    const VENDOR: &'static str = "SteckTech";
-    const URL: &'static str = "https://steck.tech";
-    const EMAIL: &'static str = "info@steck.tech";
+impl Plugin for RMasterEQ {
+    const NAME: &'static str = "rMasterEQ";
+    const VENDOR: &'static str = "gobin";
+    const URL: &'static str = "https://example.com";
+    const EMAIL: &'static str = "info@example.com";
     const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
     const AUDIO_IO_LAYOUTS: &'static [AudioIOLayout] = &[
@@ -77,6 +78,8 @@ impl Plugin for MyPlugin {
         true
     }
 
+    fn reset(&mut self) {}
+
     fn process(
         &mut self,
         buffer: &mut Buffer,
@@ -95,16 +98,14 @@ impl Plugin for MyPlugin {
         ProcessStatus::Normal
     }
 
-    fn reset(&mut self) {}
-
     // This can be used for cleaning up special resources like socket connections whenever the
     // plugin is deactivated. Most plugins won't need to do anything here.
     fn deactivate(&mut self) {}
 }
 
-impl ClapPlugin for MyPlugin {
-    const CLAP_ID: &'static str = "com.stecktech.myplug";
-    const CLAP_DESCRIPTION: Option<&'static str> = Some("An example plugin");
+impl ClapPlugin for RMasterEQ {
+    const CLAP_ID: &'static str = "com.gobin.rmastereq";
+    const CLAP_DESCRIPTION: Option<&'static str> = Some("A linear phase master eq");
     const CLAP_MANUAL_URL: Option<&'static str> = Some(Self::URL);
     const CLAP_SUPPORT_URL: Option<&'static str> = None;
     const CLAP_FEATURES: &'static [ClapFeature] = &[
@@ -115,11 +116,11 @@ impl ClapPlugin for MyPlugin {
     ];
 }
 
-impl Vst3Plugin for MyPlugin {
+impl Vst3Plugin for RMasterEQ {
     const VST3_CLASS_ID: [u8; 16] = *b"MStecktechPlugin";
     const VST3_SUBCATEGORIES: &'static [Vst3SubCategory] =
         &[Vst3SubCategory::Fx, Vst3SubCategory::Tools];
 }
 
-nih_export_clap!(MyPlugin);
-nih_export_vst3!(MyPlugin);
+nih_export_clap!(RMasterEQ);
+nih_export_vst3!(RMasterEQ);

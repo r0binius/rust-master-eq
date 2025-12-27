@@ -325,13 +325,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "my-plugin"
-version = "0.1.0"
-dependencies = [
- "nih_plug",
-]
-
-[[package]]
 name = "nih_log"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -513,6 +506,13 @@ source = "git+https://github.com/nicokoch/reflink.git?rev=e8d93b465f5d9ad340cd05
 dependencies = [
  "libc",
  "winapi",
+]
+
+[[package]]
+name = "rmastereq"
+version = "0.1.0"
+dependencies = [
+ "nih_plug",
 ]
 
 [[package]]
